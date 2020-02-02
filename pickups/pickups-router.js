@@ -4,7 +4,7 @@ const Pickups = require("./pickups-model.js");
 
 // FOR BUSINESSES
 
-//POST for a business to create a new pickup /
+//POST for a business to create a new pickup / --tested and working
 
 router.post("/", (req, res) => {
   const pickup = req.body;
@@ -18,8 +18,20 @@ router.post("/", (req, res) => {
     });
 });
 
-//PUT for a business to edit its pickup by id /:id
-//need update, findById
+//PUT for a business to edit its pickup by id /:id --tested and working
+
+router.put("/:id", (req, res) => {
+  let id = req.params.id;
+  let changes = req.body;
+
+  Pickups.update(id, changes)
+    .then(() => {
+      res.status(200).json({ message: "request was updated" });
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
 
 //GET for a business to see all of its pickups /business/:id --tested and working
 
@@ -35,13 +47,25 @@ router.get("/business/:id", (req, res) => {
     });
 });
 
-//DELETE for a business to cancel its pickup /:id
-//remove, findById
+//DELETE for a business to cancel its pickup /:id --tested, working, but returns an empty object
+
+router.delete("/:id", (req, res) => {
+  let id = req.params.id;
+
+  Pickups.remove(id)
+    .then(() => {
+      res
+        .status(200)
+        .json({ message: "The business was successfully deleted." });
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
 
 // FOR VOLUNTEERS
 
 //GET for a volunteer to see all unassigned pickups /open-requests --tested and working
-//need find (where there is no volunteerId)
 
 router.get("/open-requests", (req, res) => {
   Pickups.findUnassigned()
@@ -65,7 +89,6 @@ router.get("/:id", (req, res) => {
 });
 
 //GET for a volunteer to see all of its accepted pickups /volunteer/:id --tested and working
-//need findById (req.params.id)
 
 router.get("/volunteer/:id", (req, res) => {
   const volId = req.params.id;
@@ -79,10 +102,19 @@ router.get("/volunteer/:id", (req, res) => {
     });
 });
 
-//PUT for a volunteer to accept a pickup /:id
-//need findById, update
+//PUT for a volunteer to accept/cancel a pickup /:id --same route logic as a business to edit a request, but needs middleware
 
-//PUT for a volunteer to cancel a pickup /:id
-//need findById, update
+router.put("/:id", (req, res) => {
+  let id = req.params.id;
+  let changes = req.body;
+
+  Pickups.update(id, changes)
+    .then(() => {
+      res.status(200).json({ message: "request was updated" });
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
 
 module.exports = router;

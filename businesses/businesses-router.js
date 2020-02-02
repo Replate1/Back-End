@@ -41,39 +41,13 @@ router.put("/:id", (req, res) => {
     .catch(error => {
       res.status(500).json(error);
     });
-
-  //   Businesses.update(updateId, req.body)
-  //     .then(updated => {
-  //       if (!updateId) {
-  //         res.status(404).json({
-  //           message: "The business with the specified ID does not exist"
-  //         });
-  //       } else if (!req.body.address || !req.body.name) {
-  //         res
-  //           .status(400)
-  //           .json({ message: "Please provide a business name and address" });
-  //       } else {
-  //         res.status(200).json(updated);
-  //       }
-  //     })
-  //     .catch(error => {
-  //       res
-  //         .status(500)
-  //         .json({ message: "The business information could not be modified" });
-  //     });
-
-  //   Businesses.findById(updateId)
-  //     .then(res.json(req.body))
-  //     .catch(error => {
-  //       res.status(500).json(error);
-  //     });
 });
 
-// DELETE for one business --working but returns an empty object with a 500 status
+// DELETE for one business --tested and working
 
 router.delete("/:id", (req, res) => {
   Businesses.remove(req.params.id)
-    .then(res => {
+    .then(() => {
       res
         .status(200)
         .json({ message: "The business was successfully deleted." });
