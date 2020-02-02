@@ -38,7 +38,7 @@ exports.up = function(knex) {
       tbl.increments();
       tbl.string("food_type").notNullable();
       tbl.integer("amount").notNullable();
-      tbl.datetime("pickupTime").notNullable();
+      tbl.integer("pickupTime").notNullable();
       tbl.boolean("complete");
       tbl
         .integer("business_id")
