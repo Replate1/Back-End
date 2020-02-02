@@ -1,27 +1,45 @@
+const db = require("../database/dbConfig");
+
 module.exports = {
   add,
   update,
-  find,
+  findByBizId,
+  findByVolId,
   findById,
+  findUnassigned,
   remove
 };
 
-function add() {
-  return;
+function add(pickup) {
+  return db("pickups").insert(pickup);
 }
 
-function update() {
-  return;
+function update(id, changes) {
+  return db("pickups")
+    .where({ id })
+    .update(changes);
 }
 
-function find() {
-  return;
+function findByBizId(bizId) {
+  return db("pickups").where({ business_id: bizId });
 }
 
-function findById() {
-  return;
+function findByVolId(volId) {
+  return db("pickups").where({ volunteer_id: volId });
 }
 
-function remove() {
-  return;
+function findUnassigned() {
+  return db("pickups").where({ volunteer_id: null });
+}
+
+function findById(id) {
+  return db("pickups")
+    .where({ id })
+    .first();
+}
+
+function remove(id) {
+  return db("pickups")
+    .where({ id })
+    .del();
 }

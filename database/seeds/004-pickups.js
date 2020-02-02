@@ -20,6 +20,14 @@ exports.seed = function(knex) {
           complete: false,
           business_id: 2,
           volunteer_id: 4
+        },
+        {
+          food_type: "tortillas",
+          amount: 3,
+          pickupTime: 500100100,
+          complete: false,
+          business_id: 1,
+          volunteer_id: 4
         }
       ]);
     });
