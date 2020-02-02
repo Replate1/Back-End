@@ -8,33 +8,23 @@ const Users = require("./auth-model.js");
 // const Businesses = require("../businesses/businesses-model.js");
 // const Volunteers = require("../volunteers/volunteers-model.js");
 
-//POST for registering new users
+//POST for registering new users --working
 
 router.post("/register", (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 12);
   user.password = hash;
 
-  //   if (user.type === "business") {
   Users.add(user)
     .then(newUser => {
       res.status(201).json(newUser);
     })
-    .catch(500)
-    .json({ message: "something went wrong" });
-  //   } else if (user.type === "volunteer") {
-  //     Volunteers.add(user)
-  //       .then(newVolunteer => {
-  //         res.status(201).json(newVolunteer);
-  //       })
-  //       .catch(500)
-  //       .json({ message: "something went wrong" });
-  //   } else {
-  //     res.status(400).json({ message: "oops, try again" });
-  //   }
+    .catch(error => {
+      res.status(500).json({ message: error });
+    });
 });
 
-// POST for logging in
+// POST for logging in --working and returning token
 
 router.post("/login", (req, res) => {
   let { username, password } = req.body;
@@ -57,9 +47,7 @@ router.post("/login", (req, res) => {
 
 function youveGotToken(user) {
   const payload = {
-    subject: user.id,
-    username: user.username,
-    department: user.department
+    subject: user.id
   };
 
   const options = {
