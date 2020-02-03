@@ -1,4 +1,3 @@
-const Users = require("./auth-model.js");
 const jwt = require("jsonwebtoken");
 
 const { jwtSecret } = require("../config/secrets.js");
@@ -16,13 +15,11 @@ function validateUserId(req, res, next) {
         res.status(401).json({ message: "your token is invalid" });
       } else {
         req.user = decodedToken.user;
-        Users.findById(req.user.id).then(user => {
-          if (user) {
-            next();
-          } else {
-            res.status(500).json({ message: "invalid user id" });
-          }
-        });
+        if (req.user.id === req.params.id) {
+          next();
+        } else {
+          res.status(401).json({ message: "you shall not pass" });
+        }
       }
     });
   } else {
