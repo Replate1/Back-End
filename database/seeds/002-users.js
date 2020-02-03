@@ -9,24 +9,28 @@ exports.seed = function(knex) {
           username: "bizone",
           password: "test",
           phone_number: "555-555-5555",
+          email: "test@test.com",
           type: 1
         },
         {
           username: "biztwo",
           password: "test",
           phone_number: "555-555-5555",
+          email: "test@test.com",
           type: 1
         },
         {
           username: "volone",
           password: "test",
           phone_number: "555-555-5555",
+          email: "test@test.com",
           type: 2
         },
         {
           username: "voltwo",
           password: "test",
           phone_number: "555-555-5555",
+          email: "test@test.com",
           type: 2
         }
       ]);
