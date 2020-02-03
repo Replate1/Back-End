@@ -1,17 +1,17 @@
 // Update with your config settings.
 
-const localPg = {
-  host: "",
-  port: 4000,
-  database: "replate",
-  user: "username",
-  password: "password"
-};
+// const localPg = {
+//   host: "",
+//   port: 4000,
+//   database: "replate",
+//   user: "username",
+//   password: "password"
+// };
 
-const pgUser = process.env.PG_USER || "anna";
-const pgDb = process.env.PG_DB || "postgres";
+// const pgUser = process.env.PG_USER || "anna";
+// const pgDb = process.env.PG_DB || "postgres";
 
-const prodConnection = `postgres://${pgUser}@localhost/${pgDb}`;
+// const prodConnection = `postgres://${pgUser}@localhost/${pgDb}`;
 
 module.exports = {
   development: {
@@ -64,7 +64,7 @@ module.exports = {
 
   production: {
     client: "pg",
-    connection: prodConnection,
+    connection: process.env.DATABASE_URL,
     migrations: {
       directory: "./database/migrations"
     },
