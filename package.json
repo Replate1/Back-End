@@ -7,7 +7,7 @@
   "author": "bamfranceschi <anna.franceschi@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "server": "nodemon",
+    "server": "nodemon index.js",
     "start": "node index.js",
     "test": "jest --watch"
   },
@@ -28,6 +28,7 @@
     "cross-env": "^7.0.0",
     "jest": "^25.1.0",
     "nodemon": "^2.0.2",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "dotenv": "^8.2.0"
   }
 }
