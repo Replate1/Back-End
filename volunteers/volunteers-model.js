@@ -16,20 +16,27 @@ function findById(id) {
 }
 
 function updateVol(updateId, updateVolunteer) {
-  return db.transaction(function(trx) {
-    return Promise.all([
-      db("users")
-        .transacting(trx)
-        .update({ phone_number: updateVolunteer.phone })
-        .where({ id: updateId }),
-      db("profiles")
-        .transacting(trx)
-        .update({ name: updateVolunteer.name })
-        .where({ user_id: updateId })
-    ])
-      .then(trx.commit)
-      .catch(trx.abort);
-  });
+  return db
+    .transaction(function(trx) {
+      return Promise.all([
+        db("users")
+          .transacting(trx)
+          .update({ phone_number: updateVolunteer.phone })
+          .where({ id: updateId }),
+        db("profiles")
+          .transacting(trx)
+          .update({ name: updateVolunteer.name })
+          .where({ user_id: updateId })
+      ])
+        .then(trx.commit)
+        .catch(trx.rollback);
+    })
+    .then(function() {
+      console.log("user and profile details successfully updated");
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
 }
 
 function remove(id) {
