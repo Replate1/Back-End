@@ -29,7 +29,7 @@ router.put("/:id", (req, res) => {
   const updateBusiness = {
     name: req.body.name,
     address: req.body.address,
-    phone: req.body.phoneNumber
+    phone: req.body.phone_number
   };
 
   Businesses.updateBiz(updateId, updateBusiness)

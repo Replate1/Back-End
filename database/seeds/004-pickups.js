@@ -8,7 +8,7 @@ exports.seed = function(knex) {
         {
           food_type: "rye bread",
           amount: 5,
-          pickupTime: 200100100,
+          pickup_time: 200100100,
           complete: false,
           business_id: 1,
           volunteer_id: 3
@@ -16,7 +16,7 @@ exports.seed = function(knex) {
         {
           food_type: "wilted greens",
           amount: 3,
-          pickupTime: 500100100,
+          pickup_time: 500100100,
           complete: false,
           business_id: 2,
           volunteer_id: 4
@@ -24,7 +24,7 @@ exports.seed = function(knex) {
         {
           food_type: "tortillas",
           amount: 3,
-          pickupTime: 500100100,
+          pickup_time: 500100100,
           complete: false,
           business_id: 1,
           volunteer_id: 4

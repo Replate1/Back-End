@@ -27,7 +27,7 @@ router.put("/:id", (req, res) => {
   const updateId = req.params.id;
   const updateVolunteer = {
     name: req.body.name,
-    phone: req.body.phoneNumber
+    phone: req.body.phone_number
   };
 
   Volunteers.updateVol(updateId, updateVolunteer)

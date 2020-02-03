@@ -9,7 +9,7 @@ module.exports = {
 function findById(id) {
   return db("users as u")
     .leftJoin("profiles as p", "p.user_id", "u.id")
-    .select("u.username", "u.phoneNumber", "p.name", "p.address")
+    .select("u.username", "u.phone_number", "p.name", "p.address")
     .where("u.id", parseInt(id))
     .on("query", console.log)
     .first();
@@ -20,7 +20,7 @@ function updateBiz(updateId, updateBusiness) {
     return Promise.all([
       db("users")
         .transacting(trx)
-        .update({ phoneNumber: updateBusiness.phone })
+        .update({ phone_number: updateBusiness.phone })
         .where({ id: updateId }),
       db("profiles")
         .transacting(trx)

@@ -1,8 +1,8 @@
 exports.up = function(knex) {
   return knex.schema
-    .createTable("user-types", tbl => {
+    .createTable("user_types", tbl => {
       tbl.increments();
-      tbl.string("userType").notNullable();
+      tbl.string("user_type").notNullable();
     })
     .createTable("users", tbl => {
       tbl.increments();
@@ -11,13 +11,13 @@ exports.up = function(knex) {
         .notNullable()
         .unique();
       tbl.string("password", 128).notNullable();
-      tbl.string("phoneNumber").notNullable();
+      tbl.string("phone_number").notNullable();
       tbl
         .integer("type")
         .unsigned()
         .notNullable()
         .references("id")
-        .inTable("user-types")
+        .inTable("user_types")
         .onUpdate("CASCADE")
         .onDelete("RESTRICT");
     })
@@ -38,7 +38,7 @@ exports.up = function(knex) {
       tbl.increments();
       tbl.string("food_type").notNullable();
       tbl.integer("amount").notNullable();
-      tbl.integer("pickupTime").notNullable();
+      tbl.integer("pickup_time").notNullable();
       tbl.boolean("complete");
       tbl
         .integer("business_id")
@@ -63,5 +63,5 @@ exports.down = function(knex) {
     .dropTableIfExists("pickups")
     .dropTableIfExists("profiles")
     .dropTableIfExists("users")
-    .dropTableIfExists("user-types");
+    .dropTableIfExists("user_types");
 };

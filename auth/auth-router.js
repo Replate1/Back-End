@@ -47,7 +47,8 @@ router.post("/login", (req, res) => {
 
 function youveGotToken(user) {
   const payload = {
-    subject: user.id
+    subject: user.id,
+    role: user.type
   };
 
   const options = {
