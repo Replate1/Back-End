@@ -20,7 +20,7 @@ exports.up = function(knex) {
         .references("id")
         .inTable("user_types")
         .onUpdate("CASCADE")
-        .onDelete("RESTRICT");
+        .onDelete("CASCADE");
     })
     .createTable("profiles", tbl => {
       tbl.increments();
