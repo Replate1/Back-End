@@ -1,10 +1,10 @@
 exports.up = function(knex) {
   return knex.schema
-    .createTable("user_types", tbl => {
+    .createTable("user_types", function(tbl) {
       tbl.increments("id");
       tbl.string("user_type").notNullable();
     })
-    .createTable("users", tbl => {
+    .createTable("users", function(tbl) {
       tbl.increments("id");
       tbl
         .string("username", 128)
@@ -24,7 +24,7 @@ exports.up = function(knex) {
         .onUpdate("CASCADE")
         .onDelete("RESTRICT");
     })
-    .createTable("pickups", tbl => {
+    .createTable("pickups", function(tbl) {
       tbl.increments("id");
       tbl.string("food_type").notNullable();
       tbl.integer("amount").notNullable();
