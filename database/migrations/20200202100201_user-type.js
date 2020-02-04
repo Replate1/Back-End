@@ -11,6 +11,8 @@ exports.up = function(knex) {
         .notNullable()
         .unique();
       tbl.string("password", 128).notNullable();
+      tbl.string("name").notNullable();
+      tbl.string("address").notNullable();
       tbl.string("phone_number").notNullable();
       tbl.string("email", 128).notNullable();
       tbl
@@ -19,19 +21,6 @@ exports.up = function(knex) {
         .notNullable()
         .references("id")
         .inTable("user_types")
-        .onUpdate("CASCADE")
-        .onDelete("CASCADE");
-    })
-    .createTable("profiles", tbl => {
-      tbl.increments();
-      tbl.string("name").notNullable();
-      tbl.string("address");
-      tbl
-        .integer("user_id")
-        .unsigned()
-        .notNullable()
-        .references("id")
-        .inTable("users")
         .onUpdate("CASCADE")
         .onDelete("RESTRICT");
     })
@@ -62,7 +51,6 @@ exports.up = function(knex) {
 exports.down = function(knex) {
   return knex.schema
     .dropTableIfExists("pickups")
-    .dropTableIfExists("profiles")
     .dropTableIfExists("users")
     .dropTableIfExists("user_types");
 };
