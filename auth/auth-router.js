@@ -34,8 +34,10 @@ router.post("/login", (req, res) => {
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = youveGotToken(user);
+        const id = user.id;
+        const userType = user.type;
 
-        res.status(200).json({ token });
+        res.status(200).json({ token, id, userType });
       } else {
         res.status(401).json({ message: "you ain't got the creds" });
       }
