@@ -27,12 +27,9 @@ router.get("/:id", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const updateId = req.params.id;
-  const updateVolunteer = {
-    name: req.body.name,
-    phone: req.body.phone_number
-  };
+  const changes = req.body;
 
-  Volunteers.updateVol(updateId, updateVolunteer)
+  Volunteers.updateVol(updateId, changes)
     .then(() => {
       Volunteers.findById(updateId).then(volunteer =>
         res.status(200).json(volunteer)

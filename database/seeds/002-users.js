@@ -8,6 +8,8 @@ exports.seed = function(knex) {
         {
           username: "bizone",
           password: "test",
+          name: "Best Business Ever",
+          address: "123 Awesome Ave, Awesometown, AR, 00000",
           phone_number: "555-555-5555",
           email: "test@test.com",
           type: 1
@@ -15,6 +17,8 @@ exports.seed = function(knex) {
         {
           username: "biztwo",
           password: "test",
+          name: "Second Best Business Ever",
+          address: "489 Somewhereville, Somewhere, USA",
           phone_number: "555-555-5555",
           email: "test@test.com",
           type: 1
@@ -22,6 +26,8 @@ exports.seed = function(knex) {
         {
           username: "volone",
           password: "test",
+          name: "Leslie Knope",
+          address: "345 1st Street, Pawnee, IN",
           phone_number: "555-555-5555",
           email: "test@test.com",
           type: 2
@@ -29,6 +35,8 @@ exports.seed = function(knex) {
         {
           username: "voltwo",
           password: "test",
+          name: "Ron Swanson",
+          address: "556 Bacon Blvd, Pawnee, IN",
           phone_number: "555-555-5555",
           email: "test@test.com",
           type: 2

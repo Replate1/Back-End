@@ -30,13 +30,9 @@ router.get("/:id", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const updateId = req.params.id;
-  const updateBusiness = {
-    name: req.body.name,
-    address: req.body.address,
-    phone: req.body.phone_number
-  };
+  const changes = req.body;
 
-  Businesses.updateBiz(updateId, updateBusiness)
+  Businesses.updateBiz(updateId, changes)
     .then(() => {
       Businesses.findById(updateId).then(business =>
         res.status(200).json(business)
