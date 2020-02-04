@@ -18,7 +18,7 @@ module.exports = {
     client: "sqlite3",
     useNullAsDefault: true,
     connection: {
-      filename: "./database/replate.db3"
+      filename: "./replate.db3"
     },
     migrations: {
       directory: "./database/migrations"

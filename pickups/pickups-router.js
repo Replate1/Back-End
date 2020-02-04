@@ -2,15 +2,15 @@ const router = require("express").Router();
 
 const Pickups = require("./pickups-model.js");
 
-const restricted = require("../auth/restricted-mw.js");
+// const restricted = require("../auth/restricted-mw.js");
 
-const userRole = require("../auth/role-mw.js");
+// const userRole = require("../auth/role-mw.js");
 
 // FOR BUSINESSES
 
 //POST for a business to create a new pickup / --tested and working
 
-router.post("/", restricted, (req, res) => {
+router.post("/", (req, res) => {
   const pickup = req.body;
 
   Pickups.add(pickup)
@@ -24,7 +24,7 @@ router.post("/", restricted, (req, res) => {
 
 //PUT for a business to edit its pickup by id /:id --tested and working
 
-router.put("/:id", restricted, (req, res) => {
+router.put("/:id", (req, res) => {
   let id = req.params.id;
   let changes = req.body;
 
@@ -39,7 +39,7 @@ router.put("/:id", restricted, (req, res) => {
 
 //GET for a business to see all of its pickups /business/:id --tested and working
 
-router.get("/business/:id", restricted, (req, res) => {
+router.get("/business/:id", (req, res) => {
   const bizId = req.params.id;
 
   Pickups.findByBizId(bizId)
@@ -53,14 +53,14 @@ router.get("/business/:id", restricted, (req, res) => {
 
 //DELETE for a business to cancel its pickup /:id --tested, working, but returns an empty object
 
-router.delete("/:id", restricted, (req, res) => {
+router.delete("/:id", (req, res) => {
   let id = req.params.id;
 
   Pickups.remove(id)
     .then(() => {
       res
         .status(200)
-        .json({ message: "The business was successfully deleted." });
+        .json({ message: "The pickup request was successfully deleted." });
     })
     .catch(error => {
       res.status(500).json(error);
@@ -71,7 +71,7 @@ router.delete("/:id", restricted, (req, res) => {
 
 //GET for a volunteer to see all unassigned pickups /open-requests --tested and working
 
-router.get("/open-requests", restricted, (req, res) => {
+router.get("/open-requests", (req, res) => {
   Pickups.findUnassigned()
     .then(openRequests => {
       res.status(200).json(openRequests);
@@ -82,7 +82,7 @@ router.get("/open-requests", restricted, (req, res) => {
 });
 
 //GET for a volunteer to see one pickup by id /:id --tested and working
-router.get("/:id", restricted, (req, res) => {
+router.get("/:id", (req, res) => {
   Pickups.findById(req.params.id)
     .then(pickup => {
       res.status(200).json(pickup);
@@ -94,7 +94,7 @@ router.get("/:id", restricted, (req, res) => {
 
 //GET for a volunteer to see all of its accepted pickups /volunteer/:id --tested and working
 
-router.get("/volunteer/:id", restricted, (req, res) => {
+router.get("/volunteer/:id", (req, res) => {
   const volId = req.params.id;
 
   Pickups.findByVolId(volId)
@@ -108,7 +108,7 @@ router.get("/volunteer/:id", restricted, (req, res) => {
 
 //PUT for a volunteer to accept/cancel a pickup /:id --same route logic as a business to edit a request, but needs middleware
 
-router.put("/:id", restricted, (req, res) => {
+router.put("/:id", (req, res) => {
   let id = req.params.id;
   let changes = req.body;
 

@@ -2,9 +2,9 @@ const router = require("express").Router();
 
 const Businesses = require("./businesses-model.js");
 
-const validateUserId = require("../auth/validateUserId-mw.js");
+// const validateUserId = require("../auth/validateUserId-mw.js");
 
-const restricted = require("../auth/restricted-mw.js");
+// const restricted = require("../auth/restricted-mw.js");
 
 //BUSINESS PROFILE ENDPOINTS
 
@@ -12,7 +12,7 @@ const restricted = require("../auth/restricted-mw.js");
 
 // returns the username, phoneNumber, name and address of a business
 
-router.get("/:id", restricted, (req, res) => {
+router.get("/:id", (req, res) => {
   Businesses.findById(req.params.id)
     .then(business => {
       if (business) {
@@ -28,7 +28,7 @@ router.get("/:id", restricted, (req, res) => {
 
 // PUT for one business profile --NOT WORKING: ONLY UPDATING USER INFO, NOT PROFILE INFO
 
-router.put("/:id", restricted, (req, res) => {
+router.put("/:id", (req, res) => {
   const updateId = req.params.id;
   const updateBusiness = {
     name: req.body.name,
@@ -49,7 +49,7 @@ router.put("/:id", restricted, (req, res) => {
 
 // DELETE for one business --tested and working
 
-router.delete("/:id", restricted, (req, res) => {
+router.delete("/:id", (req, res) => {
   Businesses.remove(req.params.id)
     .then(() => {
       res
