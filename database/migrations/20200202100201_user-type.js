@@ -1,11 +1,11 @@
 exports.up = function(knex) {
   return knex.schema
     .createTable("user_types", tbl => {
-      tbl.increments();
+      tbl.increments("id");
       tbl.string("user_type").notNullable();
     })
     .createTable("users", tbl => {
-      tbl.increments();
+      tbl.increments("id");
       tbl
         .string("username", 128)
         .notNullable()
@@ -25,7 +25,7 @@ exports.up = function(knex) {
         .onDelete("RESTRICT");
     })
     .createTable("pickups", tbl => {
-      tbl.increments();
+      tbl.increments("id");
       tbl.string("food_type").notNullable();
       tbl.integer("amount").notNullable();
       tbl.integer("pickup_time").notNullable();
