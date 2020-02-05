@@ -2,13 +2,15 @@ const router = require("express").Router();
 
 const Volunteers = require("./volunteers-model.js");
 
+const validateUserId = require("../auth/validateUserId-mw.js");
+
 // const restricted = require("../auth/restricted-mw.js");
 
 //VOLUNTEER PROFILE ENDPOINTS
 
 // GET for one volunteer profile -- returns with username, name and phonenumber
 
-router.get("/:id", (req, res) => {
+router.get("/:id", validateUserId, (req, res) => {
   Volunteers.findById(req.params.id)
     .then(volunteer => {
       if (volunteer) {
@@ -25,7 +27,7 @@ router.get("/:id", (req, res) => {
 // PUT for one volunteer profile --NOT WORKING: ONLY UPDATING USER INFO, NOT PROFILE INFO
 //findById, update
 
-router.put("/:id", (req, res) => {
+router.put("/:id", validateUserId, (req, res) => {
   const updateId = req.params.id;
   const changes = req.body;
 
@@ -43,7 +45,7 @@ router.put("/:id", (req, res) => {
 // DELETE for one volunteer profile
 //findById, remove
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", validateUserId, (req, res) => {
   Volunteers.remove(req.params.id)
     .then(res => {
       res
