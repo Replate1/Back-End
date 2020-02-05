@@ -2,9 +2,11 @@ const router = require("express").Router();
 
 const Businesses = require("./businesses-model.js");
 
-// const validateUserId = require("../auth/validateUserId-mw.js");
+// const Users = require("../auth/auth-model.js");
 
-// const restricted = require("../auth/restricted-mw.js");
+const validateUserId = require("../auth/validateUserId-mw.js");
+
+const restricted = require("../auth/restricted-mw.js");
 
 //BUSINESS PROFILE ENDPOINTS
 
@@ -12,7 +14,7 @@ const Businesses = require("./businesses-model.js");
 
 // returns the username, phoneNumber, name and address of a business
 
-router.get("/:id", (req, res) => {
+router.get("/:id", validateUserId, (req, res) => {
   Businesses.findById(req.params.id)
     .then(business => {
       if (business) {
@@ -28,7 +30,7 @@ router.get("/:id", (req, res) => {
 
 // PUT for one business profile --NOT WORKING: ONLY UPDATING USER INFO, NOT PROFILE INFO
 
-router.put("/:id", (req, res) => {
+router.put("/:id", validateUserId, (req, res) => {
   const updateId = req.params.id;
   const changes = req.body;
 
@@ -45,7 +47,7 @@ router.put("/:id", (req, res) => {
 
 // DELETE for one business --tested and working
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", validateUserId, (req, res) => {
   Businesses.remove(req.params.id)
     .then(() => {
       res
@@ -56,5 +58,17 @@ router.delete("/:id", (req, res) => {
       res.status(500).json(error);
     });
 });
+
+// function validateUserId(req, res, next) {
+//   // const token = req.headers.authorization;
+//   Users.findById(req.params.id).then(user => {
+//     if (user && user.id === req.user.id) {
+//       console.log(user);
+//       next();
+//     } else {
+//       res.status(401).json({ message: "you're not supposed to be here" });
+//     }
+//   });
+// }
 
 module.exports = router;

@@ -2,7 +2,13 @@ const router = require("express").Router();
 
 const Pickups = require("./pickups-model.js");
 
-// const restricted = require("../auth/restricted-mw.js");
+const restricted = require("../auth/restricted-mw.js");
+
+const validateUserId = require("../auth/validateUserId-mw.js");
+
+const validateVolRole = require("../auth/volunteerRole-mw.js");
+
+const validateBizRole = require("../auth/businessRole-mw.js");
 
 // const userRole = require("../auth/role-mw.js");
 
@@ -10,7 +16,7 @@ const Pickups = require("./pickups-model.js");
 
 //POST for a business to create a new pickup / --tested and working
 
-router.post("/", (req, res) => {
+router.post("/", restricted, validateBizRole, (req, res) => {
   const pickup = req.body;
 
   Pickups.add(pickup)
@@ -24,7 +30,7 @@ router.post("/", (req, res) => {
 
 //PUT for a business to edit its pickup by id /:id --tested and working
 
-router.put("/:id", (req, res) => {
+router.put("/:id", restricted, (req, res) => {
   let id = req.params.id;
   let changes = req.body;
 
@@ -39,7 +45,7 @@ router.put("/:id", (req, res) => {
 
 //GET for a business to see all of its pickups /business/:id --tested and working
 
-router.get("/business/:id", (req, res) => {
+router.get("/business/:id", validateUserId, (req, res) => {
   const bizId = req.params.id;
 
   Pickups.findByBizId(bizId)
@@ -53,7 +59,7 @@ router.get("/business/:id", (req, res) => {
 
 //DELETE for a business to cancel its pickup /:id --tested, working, but returns an empty object
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", restricted, (req, res) => {
   let id = req.params.id;
 
   Pickups.remove(id)
@@ -71,7 +77,7 @@ router.delete("/:id", (req, res) => {
 
 //GET for a volunteer to see all unassigned pickups /open-requests --tested and working
 
-router.get("/open-requests", (req, res) => {
+router.get("/open-requests", restricted, validateVolRole, (req, res) => {
   Pickups.findUnassigned()
     .then(openRequests => {
       res.status(200).json(openRequests);
@@ -82,7 +88,7 @@ router.get("/open-requests", (req, res) => {
 });
 
 //GET for a volunteer to see one pickup by id /:id --tested and working
-router.get("/:id", (req, res) => {
+router.get("/:id", restricted, (req, res) => {
   Pickups.findById(req.params.id)
     .then(pickup => {
       res.status(200).json(pickup);
@@ -94,7 +100,7 @@ router.get("/:id", (req, res) => {
 
 //GET for a volunteer to see all of its accepted pickups /volunteer/:id --tested and working
 
-router.get("/volunteer/:id", (req, res) => {
+router.get("/volunteer/:id", validateUserId, (req, res) => {
   const volId = req.params.id;
 
   Pickups.findByVolId(volId)
@@ -108,7 +114,7 @@ router.get("/volunteer/:id", (req, res) => {
 
 //PUT for a volunteer to accept/cancel a pickup /:id --same route logic as a business to edit a request, but needs middleware
 
-router.put("/:id", (req, res) => {
+router.put("/:id", restricted, (req, res) => {
   let id = req.params.id;
   let changes = req.body;
 

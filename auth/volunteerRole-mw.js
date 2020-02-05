@@ -8,11 +8,15 @@ module.exports = (req, res, next) => {
   if (token) {
     jwt.verify(token, jwtSecret, (err, decodedToken) => {
       if (err) {
-        res.status(401).json({ message: "Your token is invalid" });
+        res.status(401).json({ message: "your token is invalid" });
       } else {
-        req.user = decodedToken.subject;
-        // console.log(decodedToken.subject);
-        next();
+        // req.user.type = decodedToken.role;
+        console.log(decodedToken.role);
+        if (decodedToken.role === 2) {
+          next();
+        } else {
+          res.status(401).json({ message: "you shall not pass" });
+        }
       }
     });
   } else {
